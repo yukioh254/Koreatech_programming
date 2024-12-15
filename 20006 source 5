@@ -1,0 +1,10 @@
+#ifndef TEAM_PRINTER_H
+#define TEAM_PRINTER_H
+
+#include <vector>
+#include <string>
+#include "team_manager.h"
+
+void printTeams(const vector<Team>& teams, int maxPlayersPerTeam);
+
+#endif
