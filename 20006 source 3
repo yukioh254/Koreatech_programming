@@ -1,0 +1,14 @@
+#ifndef TEAM_MANAGER_H
+#define TEAM_MANAGER_H
+
+#include <vector>
+#include <string>
+using namespace std;
+
+struct Team {
+    vector<pair<string, int>> members;
+};
+
+void registerPlayer(vector<Team>& teams, int level, const string& name, int maxPlayersPerTeam);
+
+#endif
