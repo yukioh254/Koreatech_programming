@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+#define endl "\n"
+
+using namespace std;
+
+struct Team {
+    vector<pair<string, int>> members;
+};
+
+void registerPlayer(vector<Team>& teams, int level, const string& name, int maxPlayersPerTeam) {
+    bool assigned = false;
+
+    for (auto& team : teams) {
+        if (!team.members.empty() && team.members.size() < maxPlayersPerTeam) {
+            if (abs(team.members[0].second - level) <= 10) {
+                team.members.emplace_back(name, level);
+                assigned = true;
+                break;
+            }
+        }
+    }
+
+    if (!assigned) {
+        Team newTeam;
+        newTeam.members.emplace_back(name, level);
+        teams.push_back(newTeam);
+    }
+}
+
+void printTeams(const vector<Team>& teams, int maxPlayersPerTeam) {
+    for (const auto& team : teams) {
+        if (team.members.empty()) continue;
+
+        if (team.members.size() >= maxPlayersPerTeam) {
+            cout << "Started!" << endl;
+        } else {
+            cout << "Waiting!" << endl;
+        }
+
+        vector<pair<string, int>> sortedMembers = team.members;
+        sort(sortedMembers.begin(), sortedMembers.end(), [](const pair<string, int>& a, const pair<string, int>& b) {
+            return a.second < b.second;
+        });
+
+        for (const auto& member : sortedMembers) {
+            cout << member.second << " " << member.first << endl;
+        }
+    }
+}
+
+int main() {
+    int p, m;
+    cin >> p >> m; 
+
+    vector<Team> teams;
+
+    for (int i = 0; i < p; ++i) {
+        int level;
+        string name;
+        cin >> level >> name;
+        registerPlayer(teams, level, name, m);
+    }
+
+    printTeams(teams, m);
+
+    return 0;
+}
