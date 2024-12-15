@@ -1,0 +1,22 @@
+#include "team_manager.h"
+#include <cmath>
+
+void registerPlayer(vector<Team>& teams, int level, const string& name, int maxPlayersPerTeam) {
+    bool assigned = false;
+
+    for (auto& team : teams) {
+        if (!team.members.empty() && team.members.size() < maxPlayersPerTeam) {
+            if (abs(team.members[0].second - level) <= 10) {
+                team.members.emplace_back(name, level);
+                assigned = true;
+                break;
+            }
+        }
+    }
+
+    if (!assigned) {
+        Team newTeam;
+        newTeam.members.emplace_back(name, level);
+        teams.push_back(newTeam);
+    }
+}
